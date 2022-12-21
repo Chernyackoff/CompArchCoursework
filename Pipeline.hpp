@@ -8,11 +8,9 @@
 #include <map>
 #include "Command.hpp"
 
-std::map<int, std::string> stages = {{0, "IF&ID"}, {1, "OP1"}, {2, "OP2"}, {3, "EXE"}, {4, "WB"}};
-
 class Pipeline {
 public:
-    Pipeline(int mem_AT, int ex1, int ex2, std::queue<Command*> inp);
+    Pipeline(int mem_AT, int ex1, int ex2, std::queue<Command *> inp);
 
     void start();
 
@@ -54,7 +52,7 @@ private:
     bool input_blocked;
 
     // Pipeline input and internals
-    std::queue<Command*> input;
+    std::queue<Command *> input;
     std::vector<int> tic_per_cmd;
     std::vector<int> tic_theoretical;
 
@@ -65,7 +63,11 @@ private:
     int current_stage;
     int cmd_amount;
 
-
+    std::map<int, std::string> pipe_stages = {{0, "IF&ID"},
+                                              {1, "OP1"},
+                                              {2, "OP2"},
+                                              {3, "EXE"},
+                                              {4, "WB"}};
 };
 
 

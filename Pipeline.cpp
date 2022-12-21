@@ -11,6 +11,10 @@ Pipeline::Pipeline(int mem_AT, int exe1, int exe2, std::queue<Command *> inp) : 
     cmd_exe_time[Type1] = exe1;
     cmd_exe_time[Type2] = exe2;
     cmd_exe_time[Type3] = 1;
+
+    for (int i = 0; i < pipe.size(); i++){
+        pipe[i] = nullptr;
+    }
 }
 
 int Pipeline::check_time_per_stage() {
@@ -88,7 +92,7 @@ void Pipeline::move_stage() {
             pipe[i] = nullptr;
         }
     }
-    if (input_blocked || memory_blocked || pipe[0] == nullptr) return;
+    if (input_blocked || memory_blocked || pipe[0] != nullptr || input.empty()) return;
 
     pipe[0] = input.front();
     input.pop();
@@ -106,11 +110,15 @@ void Pipeline::clock() {
 void Pipeline::print_stage() {
     std::cout << "Stage " << current_stage << std::endl;
     for (int i = 0; i < pipe.size(); i++) {
-        std::cout << stages[i] << '\t';
+        std::cout << pipe_stages.find(i)->second << '\t';
         if (pipe[i] != nullptr) {
             std::cout << "Command Type " << pipe[i]->get_type() << std::endl;
         }
+        if(pipe[i] == nullptr){
+            std::cout << "NaN" << std::endl;
+        }
     }
+    std::cout << '\n';
 }
 
 void Pipeline::finish() {
