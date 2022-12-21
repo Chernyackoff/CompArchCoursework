@@ -37,7 +37,7 @@ void Pipeline::fill_TPA() {
     else tic_per_action[3] = 0;
 
     if (pipe[4] != nullptr)
-        tic_per_action[4] = tic_per_action[2];
+        tic_per_action[4] = (pipe[4]->get_operand_type(2) == REG) ? 1 : MAT;
     else tic_per_action[4] = 0;
 }
 
